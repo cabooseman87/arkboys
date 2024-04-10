@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "772a1a7890c5203fceb2170a6a53a54c",
+    "content-hash": "765786b061bd562fc2d38f05812ae7be",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -6055,6 +6055,68 @@
                 }
             ],
             "time": "2024-01-23T14:51:35+00:00"
+        },
+        {
+            "name": "tituskirch/nitrapi-php-lib",
+            "version": "4.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TitusKirch/nitrapi-php-lib.git",
+                "reference": "90991e0e4e1f5f4f3edf175cba1b11bff49891e0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TitusKirch/nitrapi-php-lib/zipball/90991e0e4e1f5f4f3edf175cba1b11bff49891e0",
+                "reference": "90991e0e4e1f5f4f3edf175cba1b11bff49891e0",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~7.0",
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Nitrapi": [
+                        "lib/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Birkner",
+                    "email": "alexander.birkner@marbis.net",
+                    "homepage": "https://github.com/BirknerAlex"
+                },
+                {
+                    "name": "Aaron Fischer",
+                    "email": "aaron.fischer@marbis.net",
+                    "homepage": "https://github.com/f0086"
+                },
+                {
+                    "name": "Titus Kirch",
+                    "email": "titus.kirch@tkirch.dev",
+                    "homepage": "https://github.com/TitusKirch"
+                }
+            ],
+            "description": "Titus version of the PHP SDK for the Nitrapi RESTful API.",
+            "keywords": [
+                "api",
+                "marbis",
+                "nitrado",
+                "nitrapi"
+            ],
+            "support": {
+                "source": "https://github.com/TitusKirch/nitrapi-php-lib/tree/4.2.0"
+            },
+            "time": "2022-03-22T12:44:03+00:00"
         },
         {
             "name": "twig/twig",

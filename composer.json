@@ -20,7 +20,8 @@
         "drupal/core-composer-scaffold": "^10.2",
         "drupal/core-project-message": "^10.2",
         "drupal/core-recommended": "^10.2",
-        "drush/drush": "^12.5"
+        "drush/drush": "^12.5",
+        "tituskirch/nitrapi-php-lib": "^4.2"
     },
     "conflict": {
         "drupal/drupal": "*"
