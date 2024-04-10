@@ -6,7 +6,10 @@ function ark_server_status_page_top(&$page_top): void {
   $key = \Drupal::service('key.repository');
   $accessToken = $key->getKey('nitrado_token')->getKeyValue();
   $api = new \Nitrapi\Nitrapi($accessToken);
-  var_dump($api->getServices());
+  print '<pre>';
+  print_r($api->getServices());
+  print '</pre>';
+//  $api->getService('Gameserver')->
 //  $service = \Drupal::service('ark_server_status.helper');
 //  $serverList = $service->getServerList();
 //  $serverBoolen = $service->checkServer('servername', $serverList);
