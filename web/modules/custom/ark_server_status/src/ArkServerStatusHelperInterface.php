@@ -12,19 +12,19 @@ interface ArkServerStatusHelperInterface {
   /**
    * Get unofficial server list.
    *
-   * @return string
+   * @return array
    */
-  public function getServerList(): string;
+  public function getServerList(): array;
 
   /**
    * Checks to see if the server is live.
    *
    * @param string $serverName
-   * @param string $serverList
+   * @param array $serverList
    *
    * @return bool
    */
-  public function checkServer(string $serverName, string $serverList): bool;
+  public function checkServer(string $serverName, array $serverList): bool;
 
   /**
    * Logs the time when we discover the server on.
