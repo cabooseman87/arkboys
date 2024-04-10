@@ -1,0 +1,5 @@
+name: 'Ark Server Status'
+type: module
+description: 'This module queries the server status and sends email updates.'
+package: Custom
+core_version_requirement: ^10 || ^11
