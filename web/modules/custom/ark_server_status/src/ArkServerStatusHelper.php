@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\ark_server_status;
 
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use GuzzleHttp\Client;
 
 /**
  * @todo Add class description.
@@ -12,17 +13,59 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 final class ArkServerStatusHelper implements ArkServerStatusHelperInterface {
 
   /**
-   * Constructs an ArkServerStatusHelper object.
+   * @var \Drupal\Core\Logger\LoggerChannelFactoryInterface
    */
-  public function __construct(
-    private readonly LoggerChannelFactoryInterface $loggerFactory,
-  ) {}
+  protected LoggerChannelFactoryInterface $logger;
 
   /**
-   * {@inheritdoc}
+   * Constructs an ArkServerStatusHelper object.
    */
-  public function doSomething(): void {
-    // @todo Place your code here.
+  public function __construct(LoggerChannelFactoryInterface $loggerFactory, Client $client) {
+    $this->logger = $loggerFactory;
+    $this->client = $client;
   }
+
+  /**
+   * @inheritDoc
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   */
+  public function getServerList(): string {
+    $request = $this->client->request('GET', 'https://cdn2.arkdedicated.com/servers/asa/unofficialserverlist.json');
+    $response = $request->getBody();
+    dump($response);
+    die();
+    return $response;
+  }
+
+  /**
+   * @inheritDoc
+   */
+  public function checkServer(string $serverName): bool {
+
+
+
+  }
+
+  /**
+   * @inheritDoc
+   */
+  public function logTime(int $time): void {
+    // TODO: Implement logTime() method.
+  }
+
+  /**
+   * @inheritDoc
+   */
+  public function getLoggedTime(): int {
+    // TODO: Implement getLoggedTime() method.
+  }
+
+  /**
+   * @inheritDoc
+   */
+  public function sendNotification(array $emails, int $duration): void {
+    // TODO: Implement sendNotification() method.
+  }
+
 
 }
