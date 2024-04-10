@@ -20,10 +20,11 @@ interface ArkServerStatusHelperInterface {
    * Checks to see if the server is live.
    *
    * @param string $serverName
+   * @param string $serverList
    *
    * @return bool
    */
-  public function checkServer(string $serverName): bool;
+  public function checkServer(string $serverName, string $serverList): bool;
 
   /**
    * Logs the time when we discover the server on.

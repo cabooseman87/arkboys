@@ -37,10 +37,10 @@ final class ArkServerStatusHelper implements ArkServerStatusHelperInterface {
   /**
    * @inheritDoc
    */
-  public function checkServer(string $serverName): bool {
-
-
-
+  public function checkServer(string $serverName, string $serverList): bool {
+    $serverListArray = json_decode($serverList);
+    var_dump($serverListArray);
+    return TRUE;
   }
 
   /**
