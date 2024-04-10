@@ -1,0 +1,4 @@
+services:
+  ark_server_status.helper:
+    class: Drupal\ark_server_status\ArkServerStatusHelper
+    arguments: ['@logger.factory']
