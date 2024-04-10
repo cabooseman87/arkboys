@@ -27,7 +27,7 @@ final class ParseServerList extends QueueWorkerBase implements ContainerFactoryP
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    private readonly LoggerChannelFactoryInterface $loggerFactory,
+    LoggerChannelFactoryInterface $loggerFactory,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
   }

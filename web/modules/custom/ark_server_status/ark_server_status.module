@@ -1,9 +1,16 @@
 <?php
 
+use Nitrapi\Nitrapi;
+
 function ark_server_status_page_top(&$page_top): void {
-  $service = \Drupal::service('ark_server_status.helper');
-  $serverList = $service->getServerList();
-  $serverBoolen = $service->checkServer('servername', $serverList);
+  $key = \Drupal::service('key.repository');
+  $accessToken = $key->getKey('nitrado_token')->getKeyValue();
+  $api = new \Nitrapi\Nitrapi($accessToken);
+  var_dump($api->getServices());
+//  $service = \Drupal::service('ark_server_status.helper');
+//  $serverList = $service->getServerList();
+//  $serverBoolen = $service->checkServer('servername', $serverList);
 }
+
 
 

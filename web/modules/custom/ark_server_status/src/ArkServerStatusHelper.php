@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Drupal\ark_server_status;
 
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use Drupal\Core\Queue\QueueFactoryInterface;
 
 /**
  * @todo Add class description.
@@ -18,16 +19,22 @@ final class ArkServerStatusHelper implements ArkServerStatusHelperInterface {
   protected LoggerChannelFactoryInterface $logger;
 
   /**
-   * @var \GuzzleHttp\Client
+   * @var \GuzzleHttp\ClientInterface
    */
-  protected Client $client;
+  protected ClientInterface $client;
+
+  /**
+   * @var \Drupal\Core\Queue\QueueFactoryInterface
+   */
+  protected QueueFactoryInterface $queueFactory;
 
   /**
    * Constructs an ArkServerStatusHelper object.
    */
-  public function __construct(LoggerChannelFactoryInterface $loggerFactory, Client $client) {
+  public function __construct(LoggerChannelFactoryInterface $loggerFactory, ClientInterface $client, QueueFactoryInterface $queueFactory) {
     $this->logger = $loggerFactory;
     $this->client = $client;
+    $this->queueFactory = $queueFactory;
   }
 
   /**
@@ -37,11 +44,11 @@ final class ArkServerStatusHelper implements ArkServerStatusHelperInterface {
   public function getServerList(): array {
     $serverNameList = [];
     $request = $this->client->request('GET', 'https://cdn2.arkdedicated.com/servers/asa/unofficialserverlist.json');
-
+    $queue = $this->queueFactory->get('ark_servers')->createQueue();
     $servers = json_decode($request->getBody()->getContents());
 
     foreach ($servers as $server) {
-      $serverNameList[] = $server->name;
+      $queue->createItem($server);
     }
 
     return $serverNameList;
