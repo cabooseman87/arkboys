@@ -31,10 +31,7 @@ final class ArkServerStatusHelper implements ArkServerStatusHelperInterface {
    */
   public function getServerList(): string {
     $request = $this->client->request('GET', 'https://cdn2.arkdedicated.com/servers/asa/unofficialserverlist.json');
-    $response = $request->getBody();
-    dump($response);
-    die();
-    return $response;
+    return $request->getBody()->getContents();
   }
 
   /**
