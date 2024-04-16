@@ -6,7 +6,9 @@ namespace Drupal\ark_server_status;
 
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use GuzzleHttp\ClientInterface;
-use Drupal\Core\Queue\QueueFactoryInterface;
+use Nitrapi\Nitrapi;
+use Exception;
+use GuzzleHttp\Psr7\Request;
 
 /**
  * @todo Add class description.
@@ -24,64 +26,53 @@ final class ArkServerStatusHelper implements ArkServerStatusHelperInterface {
   protected ClientInterface $client;
 
   /**
-   * @var \Drupal\Core\Queue\QueueFactoryInterface
-   */
-  protected QueueFactoryInterface $queueFactory;
-
-  /**
    * Constructs an ArkServerStatusHelper object.
    */
-  public function __construct(LoggerChannelFactoryInterface $loggerFactory, ClientInterface $client, QueueFactoryInterface $queueFactory) {
+  public function __construct(LoggerChannelFactoryInterface $loggerFactory, ClientInterface $client) {
     $this->logger = $loggerFactory;
     $this->client = $client;
-    $this->queueFactory = $queueFactory;
   }
 
   /**
    * @inheritDoc
-   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function getServerList(): array {
-    $serverNameList = [];
-    $request = $this->client->request('GET', 'https://cdn2.arkdedicated.com/servers/asa/unofficialserverlist.json');
-    $queue = $this->queueFactory->get('ark_servers')->createQueue();
-    $servers = json_decode($request->getBody()->getContents());
-
-    foreach ($servers as $server) {
-      $queue->createItem($server);
+  public function checkServer(string $authToken): string {
+    $serverStatus = '';
+    try {
+      $api = new Nitrapi($authToken);
+      $serverStatus = $api->getServices()[0]->getDetails()->getStatus();
+    } catch (Exception $exception) {
+      $this->logger->get('Ark Server Status')->error($exception->getMessage());
     }
 
-    return $serverNameList;
+    return $serverStatus;
   }
 
   /**
    * @inheritDoc
    */
-  public function checkServer(string $serverName, array $serverList): bool {
-    var_dump($serverList);
-    return TRUE;
+  public function checkPlayers($serviceId, $authToken): int {
+    $headers = [
+      'Authorization' => $authToken,
+      'Cookie' => '7c7a3581f78104008dff0e4df875b9c9=825924c9d72ff2baadeb92b30e16129c',
+    ];
+    $request = new Request('GET', 'https://api.nitrado.net/services/' . $serviceId . '/gameservers/games/players', $headers);
+    $response = $this->client->sendAsync($request)->wait();
+    $json = $response->getBody()->__toString();
+    $responseArray = json_decode($json, TRUE);
+    $players = $responseArray['data']['players'];
+    return count($players);
   }
 
   /**
    * @inheritDoc
    */
-  public function logTime(int $time): void {
-    // TODO: Implement logTime() method.
+  public function serverOff($authToken): void {
+    try {
+      $api = new Nitrapi($authToken);
+      $api->getServices()[0]->doStop();
+    } catch (Exception $exception) {
+      $this->logger->get('Ark Server Status')->error($exception->getMessage());
+    }
   }
-
-  /**
-   * @inheritDoc
-   */
-  public function getLoggedTime(): int {
-    // TODO: Implement getLoggedTime() method.
-  }
-
-  /**
-   * @inheritDoc
-   */
-  public function sendNotification(array $emails, int $duration): void {
-    // TODO: Implement sendNotification() method.
-  }
-
-
 }

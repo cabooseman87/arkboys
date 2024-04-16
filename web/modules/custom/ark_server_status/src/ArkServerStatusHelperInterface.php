@@ -9,43 +9,30 @@ namespace Drupal\ark_server_status;
  */
 interface ArkServerStatusHelperInterface {
 
-  /**
-   * Get unofficial server list.
-   *
-   * @return array
-   */
-  public function getServerList(): array;
-
-  /**
+   /**
    * Checks to see if the server is live.
    *
-   * @param string $serverName
-   * @param array $serverList
+   * @param string $authToken
    *
-   * @return bool
+   * @return string
    */
-  public function checkServer(string $serverName, array $serverList): bool;
+  public function checkServer(string $authToken): string;
 
   /**
-   * Logs the time when we discover the server on.
+   * Check to see if someone is online.
    *
-   * @param int $time
-   */
-  public function logTime(int $time): void;
-
-  /**
-   * Get current logged time.
+   * @param int $serviceId
+   * @param string $authToken
    *
    * @return int
    */
-  public function getLoggedTime(): int;
+  public function checkPlayers(int $serviceId, string $authToken): int;
 
   /**
-   * Sends notification.
+   * Shuts that bitch down.
    *
-   * @param array $emails
-   * @param int $duration
+   * @param string $authToken
    */
-  public function sendNotification(array $emails, int $duration): void;
+  public function serverOff(string $authToken): void;
 
 }

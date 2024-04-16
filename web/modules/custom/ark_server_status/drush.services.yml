@@ -1,0 +1,7 @@
+services:
+  ark_server_status.commands:
+    class: \Drupal\ark_server_status\Drush\Commands\ArkServerStatusCommands
+    tags:
+      - { name: drush.command }
+    arguments: ['@ark_server_status.helper', '@key.repository', '@logger.factory']
+
