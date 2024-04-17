@@ -66,6 +66,12 @@ final class ArkServerStatusCommands extends DrushCommands {
 //            fopen(self::FILE, 'w');
           }
         }
+        else {
+          if (file_exists(self::FILE)) {
+            $this->logger->notice('Would unlink file.');
+            //         unlink(self::FILE);
+          }
+        }
       }
       else {
         if (file_exists(self::FILE)) {
