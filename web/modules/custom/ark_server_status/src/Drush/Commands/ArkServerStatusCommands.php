@@ -5,6 +5,7 @@ namespace Drupal\ark_server_status\Drush\Commands;
 use Drupal\ark_server_status\ArkServerStatusHelperInterface;
 use Drush\Commands\DrushCommands;
 use Drupal\key\KeyRepositoryInterface;
+use Drupal\Core\Cache\CacheBackendInterface;
 
 /**
  * A Drush commandfile.
@@ -12,7 +13,9 @@ use Drupal\key\KeyRepositoryInterface;
 final class ArkServerStatusCommands extends DrushCommands {
 
   const TOKEN = 'nitrado_token';
+
   const SERVICE_ID = '15083592';
+
   const FILE = '/var/www/Arkboys/serverOn.txt';
 
   /**
@@ -30,12 +33,20 @@ final class ArkServerStatusCommands extends DrushCommands {
   protected KeyRepositoryInterface $key;
 
   /**
+   * The Cache bin service.
+   *
+   * @var \Drupal\Core\Cache\CacheBackendInterface
+   */
+  protected CacheBackendInterface $cache;
+
+  /**
    * Constructs an ArkServerStatusCommands object.
    */
-  public function __construct(ArkServerStatusHelperInterface $arkServerStatusHelper, KeyRepositoryInterface $key) {
+  public function __construct(ArkServerStatusHelperInterface $arkServerStatusHelper, KeyRepositoryInterface $key, CacheBackendInterface $cache) {
     parent::__construct();
     $this->arkServerStatusHelper = $arkServerStatusHelper;
     $this->key = $key;
+    $this->cache = $cache;
   }
 
   /**
@@ -50,17 +61,14 @@ final class ArkServerStatusCommands extends DrushCommands {
     if ($this->key->getkey(self::TOKEN)) {
       $authToken = $this->key->getKey(self::TOKEN)->getKeyValue();
       $status = $this->arkServerStatusHelper->checkServer($authToken);
-      print $status;
 
       if ($status === 'started') {
-        $players = \Drupal::cache()->get('ark_players')->data;
-        var_dump($players);
-
+        $players = $this->cache->get('ark_players')->data;
         if ($players === 0) {
           if (file_exists(self::FILE)) {
             $this->logger->notice('Would turn off the server.');
             var_dump('Would turn off the server.');
-//            $this->arkServerStatusHelper->serverOff($authToken);
+            $this->arkServerStatusHelper->serverOff($authToken);
           }
           else {
             $this->logger->notice('Would create a file.');
@@ -72,7 +80,7 @@ final class ArkServerStatusCommands extends DrushCommands {
           if (file_exists(self::FILE)) {
             $this->logger->notice('Would unlink file.');
             var_dump('Would unlink file.');
-                     unlink(self::FILE);
+            unlink(self::FILE);
           }
         }
       }
@@ -80,7 +88,7 @@ final class ArkServerStatusCommands extends DrushCommands {
         if (file_exists(self::FILE)) {
           $this->logger->notice('Would unlink file.');
           var_dump('Would unlink file.');
-         unlink(self::FILE);
+          unlink(self::FILE);
         }
       }
     }
