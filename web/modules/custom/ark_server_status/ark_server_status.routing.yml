@@ -1,0 +1,7 @@
+ark_server_status.ark_players:
+  path: '/ark'
+  defaults:
+    _title: 'Ark Players'
+    _controller: '\Drupal\ark_server_status\Controller\ArkPlayersController'
+  requirements:
+    _permission: 'access content'

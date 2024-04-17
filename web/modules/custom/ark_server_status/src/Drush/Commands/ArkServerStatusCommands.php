@@ -58,16 +58,19 @@ final class ArkServerStatusCommands extends DrushCommands {
 
         if ($players === 0) {
           if (file_exists(self::FILE)) {
-            $this->arkServerStatusHelper->serverOff($authToken);
+            $this->logger->notice('Would turn off the server.');
+//            $this->arkServerStatusHelper->serverOff($authToken);
           }
           else {
-            fopen(self::FILE, 'w');
+            $this->logger->notice('Would create a file.');
+//            fopen(self::FILE, 'w');
           }
         }
       }
       else {
         if (file_exists(self::FILE)) {
-         unlink(self::FILE);
+          $this->logger->notice('Would unlink file.');
+//         unlink(self::FILE);
         }
       }
     }

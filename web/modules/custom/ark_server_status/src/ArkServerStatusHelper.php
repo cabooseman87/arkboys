@@ -51,7 +51,7 @@ final class ArkServerStatusHelper implements ArkServerStatusHelperInterface {
   /**
    * @inheritDoc
    */
-  public function checkPlayers($serviceId, $authToken): int {
+  public function checkPlayers(int $serviceId, string $authToken): int {
     $headers = [
       'Authorization' => $authToken,
       'Cookie' => '7c7a3581f78104008dff0e4df875b9c9=825924c9d72ff2baadeb92b30e16129c',
@@ -75,4 +75,20 @@ final class ArkServerStatusHelper implements ArkServerStatusHelperInterface {
       $this->logger->get('Ark Server Status')->error($exception->getMessage());
     }
   }
+
+  /**
+   * @inheritDoc
+   */
+  public function getPlayers(int $serviceId, string $authToken): array {
+    $headers = [
+      'Authorization' => $authToken,
+      'Cookie' => '7c7a3581f78104008dff0e4df875b9c9=825924c9d72ff2baadeb92b30e16129c',
+    ];
+    $request = new Request('GET', 'https://api.nitrado.net/services/' . $serviceId . '/gameservers/games/players', $headers);
+    $response = $this->client->sendAsync($request)->wait();
+    $json = $response->getBody()->__toString();
+    $responseArray = json_decode($json, TRUE);
+    return $responseArray['data']['players'];
+  }
+
 }

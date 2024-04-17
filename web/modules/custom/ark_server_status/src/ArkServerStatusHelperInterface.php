@@ -35,4 +35,14 @@ interface ArkServerStatusHelperInterface {
    */
   public function serverOff(string $authToken): void;
 
+  /**
+   * Get an array of who is online.
+   *
+   * @param int $serviceId
+   * @param string $authToken
+   *
+   * @return array
+   */
+  public function getPlayers(int $serviceId, string $authToken): array;
+
 }
