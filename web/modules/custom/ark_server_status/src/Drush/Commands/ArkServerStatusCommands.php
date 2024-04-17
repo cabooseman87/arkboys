@@ -76,4 +76,18 @@ final class ArkServerStatusCommands extends DrushCommands {
     }
   }
 
+  /**
+   * Provides server list.
+   *
+   * @usage ark_server_status-get-server-list
+   *
+   * @command ark_server_status:get_list
+   * @aliases ass:gl
+   */
+  public function getServerList() {
+    $serverList = $this->arkServerStatusHelper->getPlayers(0, '');
+
+  }
+
+
 }
