@@ -65,14 +65,14 @@ final class ArkServerStatusCommands extends DrushCommands {
           else {
             $this->logger->notice('Would create a file.');
             var_dump('Would create a file.');
-//            fopen(self::FILE, 'w');
+            fopen(self::FILE, 'w');
           }
         }
         else {
           if (file_exists(self::FILE)) {
             $this->logger->notice('Would unlink file.');
             var_dump('Would unlink file.');
-            //         unlink(self::FILE);
+                     unlink(self::FILE);
           }
         }
       }
@@ -80,7 +80,7 @@ final class ArkServerStatusCommands extends DrushCommands {
         if (file_exists(self::FILE)) {
           $this->logger->notice('Would unlink file.');
           var_dump('Would unlink file.');
-//         unlink(self::FILE);
+         unlink(self::FILE);
         }
       }
     }
