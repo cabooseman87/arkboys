@@ -3,5 +3,5 @@ services:
     class: \Drupal\ark_server_status\Drush\Commands\ArkServerStatusCommands
     tags:
       - { name: drush.command }
-    arguments: ['@ark_server_status.helper', '@key.repository', '@cache_factory']
+    arguments: ['@ark_server_status.helper', '@key.repository', '@cache.default']
 
