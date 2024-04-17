@@ -16,8 +16,9 @@ class StaticBatchService {
     foreach ($chunk as $server) {
       print $server['Name'];
       if ($server['Name'] === "BCV Tribe Server") {
-        var_dump($server);
-              die();
+        $playerCountExpiration = time() + (8*60);
+        \Drupal::cache()->set('ark_players', $server['NumPlayers'], $playerCountExpiration, []);
+        exit();
       }
     }
   }
