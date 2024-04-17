@@ -53,7 +53,7 @@ final class ArkServerStatusCommands extends DrushCommands {
       print $status;
 
       if ($status === 'started') {
-        $players = $this->arkServerStatusHelper->checkPlayers(self::SERVICE_ID, $authToken);
+        $players = \Drupal::cache()->get('ark_players');
         print $players;
 
         if ($players === 0) {
