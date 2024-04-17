@@ -54,7 +54,7 @@ final class ArkServerStatusCommands extends DrushCommands {
 
       if ($status === 'started') {
         $players = \Drupal::cache()->get('ark_players');
-        print $players;
+        var_dump($players);
 
         if ($players === 0) {
           if (file_exists(self::FILE)) {
