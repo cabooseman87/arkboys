@@ -64,7 +64,8 @@ final class ArkServerStatusCommands extends DrushCommands {
       $authToken = $this->key->getKey(self::TOKEN)->getKeyValue();
       $status = $this->arkServerStatusHelper->checkServer($authToken);
       print $status;
-      if (stripos($status, 'start')) {
+
+      if ($status === 'start' || $status === 'restarting') {
         $players = $this->cache->get('ark_players')->data;
         if ($players === 0) {
           if (file_exists(self::FILE)) {
