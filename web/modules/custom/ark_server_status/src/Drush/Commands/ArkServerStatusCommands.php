@@ -58,32 +58,32 @@ final class ArkServerStatusCommands extends DrushCommands {
    * @aliases ass:sn
    */
   public function getArkServerStatus() {
-    print 'Starting service.';
+    print 'Starting service.' . PHP_EOL;
     if ($this->key->getkey(self::TOKEN)) {
-      print 'Token found.';
+      print 'Token found.' . PHP_EOL;
       $authToken = $this->key->getKey(self::TOKEN)->getKeyValue();
       $status = $this->arkServerStatusHelper->checkServer($authToken);
-      print $status;
+      print 'Server Status is: ' . $status . PHP_EOL;
 
       if ($status === 'started' || $status === 'restarting') {
         $players = $this->cache->get('ark_players')->data;
-        print $players;
+        print 'Players online: ' . $players . PHP_EOL;
         if ($players === 0) {
           if (file_exists(self::FILE)) {
             $this->logger->notice('Would turn off the server.');
-            var_dump('Would turn off the server.');
+            print 'Would turn off the server.' . PHP_EOL;
             $this->arkServerStatusHelper->serverOff($authToken);
           }
           else {
             $this->logger->notice('Would create a file.');
-            var_dump('Would create a file.');
+            print 'Would create a file.' . PHP_EOL;
             fopen(self::FILE, 'w');
           }
         }
         else {
           if (file_exists(self::FILE)) {
             $this->logger->notice('Would unlink file.');
-            var_dump('Would unlink file.');
+            print 'Would unlink file.' . PHP_EOL;
             unlink(self::FILE);
           }
         }
@@ -91,7 +91,7 @@ final class ArkServerStatusCommands extends DrushCommands {
       else {
         if (file_exists(self::FILE)) {
           $this->logger->notice('Would unlink file.');
-          var_dump('Would unlink file.');
+          print 'Would unlink file.' . PHP_EOL;
           unlink(self::FILE);
         }
       }
