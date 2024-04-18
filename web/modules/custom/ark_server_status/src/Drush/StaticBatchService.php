@@ -20,7 +20,6 @@ class StaticBatchService {
         \Drupal::cache()->set('ark_players', $server['NumPlayers'], CacheBackendInterface::CACHE_PERMANENT, []);
         exit();
       }
-      \Drupal::cache()->set('ark_players', 0, CacheBackendInterface::CACHE_PERMANENT, []);
     }
   }
 
