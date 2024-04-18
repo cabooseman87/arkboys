@@ -70,28 +70,24 @@ final class ArkServerStatusCommands extends DrushCommands {
         print 'Players online: ' . $players . PHP_EOL;
         if ($players === 0) {
           if (file_exists(self::FILE)) {
-            $this->logger->notice('Would turn off the server.');
-            print 'Would turn off the server.' . PHP_EOL;
+            print 'Turning off server.' . PHP_EOL;
             $this->arkServerStatusHelper->serverOff($authToken);
           }
           else {
-            $this->logger->notice('Would create a file.');
-            print 'Would create a file.' . PHP_EOL;
+            print 'File created.' . PHP_EOL;
             fopen(self::FILE, 'w');
           }
         }
         else {
           if (file_exists(self::FILE)) {
-            $this->logger->notice('Would unlink file.');
-            print 'Would unlink file.' . PHP_EOL;
+            print 'File unlinked.' . PHP_EOL;
             unlink(self::FILE);
           }
         }
       }
       else {
         if (file_exists(self::FILE)) {
-          $this->logger->notice('Would unlink file.');
-          print 'Would unlink file.' . PHP_EOL;
+          print 'File unlinked.' . PHP_EOL;
           unlink(self::FILE);
         }
       }
