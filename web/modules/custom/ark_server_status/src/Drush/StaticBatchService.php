@@ -2,6 +2,8 @@
 
 namespace Drupal\ark_server_status\Drush;
 
+use Drupal\Core\Cache\CacheBackendInterface;
+
 /**
  * Class StaticBatchService.
  */
@@ -13,13 +15,12 @@ class StaticBatchService {
    * @param array<array> $chunk
    */
   public static function getServerData(array $chunk, &$context): void {
-    $playerCountExpiration = time() + (15*60);
     foreach ($chunk as $server) {
       if ($server['Name'] === "BCV Tribe Server") {
-        \Drupal::cache()->set('ark_players', $server['NumPlayers'], $playerCountExpiration, []);
+        \Drupal::cache()->set('ark_players', $server['NumPlayers'], CacheBackendInterface::CACHE_PERMANENT, []);
         exit();
       }
-      \Drupal::cache()->set('ark_players', 0, $playerCountExpiration, []);
+      \Drupal::cache()->set('ark_players', 0, CacheBackendInterface::CACHE_PERMANENT, []);
     }
   }
 
