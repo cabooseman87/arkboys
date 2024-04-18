@@ -58,7 +58,9 @@ final class ArkServerStatusCommands extends DrushCommands {
    * @aliases ass:sn
    */
   public function getArkServerStatus() {
+    print 'Starting service.';
     if ($this->key->getkey(self::TOKEN)) {
+      print 'Token found.';
       $authToken = $this->key->getKey(self::TOKEN)->getKeyValue();
       $status = $this->arkServerStatusHelper->checkServer($authToken);
 
