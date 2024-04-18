@@ -67,6 +67,7 @@ final class ArkServerStatusCommands extends DrushCommands {
 
       if ($status === 'started' || $status === 'restarting') {
         $players = $this->cache->get('ark_players')->data;
+        print $players;
         if ($players === 0) {
           if (file_exists(self::FILE)) {
             $this->logger->notice('Would turn off the server.');
