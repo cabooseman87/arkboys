@@ -58,7 +58,7 @@ final class ArkServerStatusCommands extends DrushCommands {
    * @aliases ass:sn
    */
   public function getArkServerStatus() {
-    print 'Starting service.' . PHP_EOL;
+    print 'Arkboys server.' . PHP_EOL;
     if ($this->key->getkey(self::TOKEN)) {
       print 'Token found.' . PHP_EOL;
       $authToken = $this->key->getKey(self::TOKEN)->getKeyValue();
